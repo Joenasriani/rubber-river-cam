@@ -17,7 +17,20 @@ https://joenasriani.github.io/rubber-river-cam/
 - Tracks hands and face with MediaPipe Tasks Vision.
 - Creates liquid/river-style finger extension trails.
 - Creates elastic cheek/mouth-corner stretch when you pinch near a mouth corner and pull outward.
+- Uses a localized canvas pixel-warp pass around the cheek/mouth area before drawing highlight and crease cues.
 - Records the processed canvas and microphone audio.
+
+## VFX pass notes
+
+This version is no longer only a drawn cheek-band overlay. When the user pinches near a mouth corner and pulls outward, the app copies the current canvas frame into an offscreen buffer, then displaces small tiles inside an elliptical cheek/mouth region toward the pull direction. This creates a more integrated rubber-stretch illusion while staying browser-first and lightweight.
+
+Remaining premium VFX work:
+
+- True mesh/UV warp instead of tile displacement.
+- Hand/face segmentation masks for occlusion.
+- Skin-aware color sampling and shading.
+- Better snap-back spring physics.
+- Finger geometry extension, not only trails.
 
 ## Browser notes
 
