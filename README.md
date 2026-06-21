@@ -1,6 +1,6 @@
 # Rubber River Cam
 
-Browser-first camera recorder prototype with elastic hand trails and cheek/mouth stretch effects.
+Browser-first camera recorder prototype with elastic hand trails, tapered finger-extension geometry, and cheek/mouth stretch effects.
 
 ## Live URL
 
@@ -15,7 +15,8 @@ https://joenasriani.github.io/rubber-river-cam/
 - Requests camera + microphone permission after pressing **Allow Camera + Mic**.
 - Shows a processed live canvas feed.
 - Tracks hands and face with MediaPipe Tasks Vision.
-- Creates liquid/river-style finger extension trails.
+- Creates liquid/river-style finger trails.
+- Adds a tapered finger-extension mesh illusion that samples the live fingertip color and draws elastic geometry beyond the fingertip.
 - Creates elastic cheek/mouth-corner stretch when you pinch near a mouth corner and pull outward.
 - Uses a localized canvas pixel-warp pass around the cheek/mouth area before drawing highlight and crease cues.
 - Records the processed canvas and microphone audio.
@@ -24,13 +25,17 @@ https://joenasriani.github.io/rubber-river-cam/
 
 This version is no longer only a drawn cheek-band overlay. When the user pinches near a mouth corner and pulls outward, the app copies the current canvas frame into an offscreen buffer, then displaces small tiles inside an elliptical cheek/mouth region toward the pull direction. This creates a more integrated rubber-stretch illusion while staying browser-first and lightweight.
 
+## Finger VFX pass notes
+
+The finger effect now has two layers: a tapered pseudo-geometry extension drawn from each tracked fingertip, plus the existing liquid river trail. The extension estimates the finger direction from the final joints, samples the current camera color near the fingertip, and draws a semi-solid elastic form with highlight and cross-contour cues before the liquid trail is drawn. This makes the effect read more like stretched anatomy rather than only a motion ribbon.
+
 Remaining premium VFX work:
 
 - True mesh/UV warp instead of tile displacement.
 - Hand/face segmentation masks for occlusion.
 - Skin-aware color sampling and shading.
 - Better snap-back spring physics.
-- Finger geometry extension, not only trails.
+- Stronger finger geometry extension with segmentation-aware occlusion.
 
 ## Browser notes
 
