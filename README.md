@@ -12,14 +12,15 @@ https://joenasriani.github.io/rubber-river-cam/
 
 ## What it does
 
-- Requests camera + microphone permission after pressing **Allow Camera + Mic**.
+- Requests camera permission first, then requests microphone separately.
+- If microphone is denied, the app continues camera-only and recording will be silent.
 - Shows a processed live canvas feed.
 - Tracks hands and face with MediaPipe Tasks Vision.
 - Creates liquid/river-style finger trails.
 - Adds a tapered finger-extension mesh illusion that samples the live fingertip color and draws elastic geometry beyond the fingertip.
 - Creates elastic cheek/mouth-corner stretch when you pinch near a mouth corner and pull outward.
 - Uses a localized canvas pixel-warp pass around the cheek/mouth area before drawing highlight and crease cues.
-- Records the processed canvas and microphone audio.
+- Records the processed canvas and microphone audio when microphone permission is available.
 
 ## VFX pass notes
 
@@ -28,6 +29,20 @@ This version is no longer only a drawn cheek-band overlay. When the user pinches
 ## Finger VFX pass notes
 
 The finger effect now has two layers: a tapered pseudo-geometry extension drawn from each tracked fingertip, plus the existing liquid river trail. The extension estimates the finger direction from the final joints, samples the current camera color near the fingertip, and draws a semi-solid elastic form with highlight and cross-contour cues before the liquid trail is drawn. This makes the effect read more like stretched anatomy rather than only a motion ribbon.
+
+## Permission denied troubleshooting
+
+Use the live GitHub Pages URL directly in **Chrome** or **Edge**. Do not open the app inside ChatGPT, GitHub, Instagram, WhatsApp, or another in-app browser/webview, because those wrappers can deny camera, microphone, WebAssembly, or WebGL access.
+
+On Android Chrome:
+
+```text
+Open the live URL → tap the lock/tune icon in the address bar → Permissions → Camera → Allow → Reload
+```
+
+If microphone permission is denied, the app should still continue with camera-only mode. Recording will be silent.
+
+If the app says tracking models could not load, reload once. If it still fails, the browser/network is blocking CDN model files. For a fully stable public build, bundle the MediaPipe `.wasm` and `.task` files locally.
 
 Remaining premium VFX work:
 
